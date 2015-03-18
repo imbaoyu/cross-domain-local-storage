@@ -36,6 +36,7 @@
         xdLocalStorage.init(
                 {
                     iframeUrl:'https://rawgit.com/ofirdagan/cross-domain-local-storage/master/app/views/cross-domain-local-storage.html',
+                    domains: domainsWhiteList,
                     initCallback: function () {
                         console.log('Got iframe ready');
                         xdLocalStorage.setItem('check', 'no callback');
