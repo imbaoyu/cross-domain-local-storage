@@ -24,19 +24,21 @@ window.xdLocalStorage = window.xdLocalStorage || (function () {
   }
 
   function receiveMessage(event) {
-    var data;
-    try {
-      data = JSON.parse(event.data);
-    } catch (err) {
-      //not our message, can ignore
-    }
-    if (data && data.namespace === MESSAGE_NAMESPACE) {
-      if (data.id === 'iframe-ready') {
-        iframeReady = true;
-        options.initCallback();
-      } else {
-        applyCallback(data);
-      }
+    if(domainsWhiteList && (new RegExp( '\\b' + domainsWhiteList.join('\\b|\\b') + '\\b', 'i') ).test(event.origin) ){
+        var data;
+        try {
+          data = JSON.parse(event.data);
+        } catch (err) {
+          //not our message, can ignore
+        }
+        if (data && data.namespace === MESSAGE_NAMESPACE) {
+          if (data.id === 'iframe-ready') {
+            iframeReady = true;
+            options.initCallback();
+          } else {
+            applyCallback(data);
+          }
+        }
     }
   }
 
