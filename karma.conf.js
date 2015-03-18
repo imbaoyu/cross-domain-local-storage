@@ -4,7 +4,7 @@
 module.exports = function(config) {
   config.set({
 
-    plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-growl-reporter'],
+    plugins: ['karma-jasmine', 'karma-coverage', 'karma-phantomjs-launcher', 'karma-growl-reporter', 'karma-chrome-launcher'],
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
@@ -61,11 +61,13 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['PhanthomJS'],
+    //browsers: ['Chrome'],
 
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: true
+    //singleRun: false
   });
 };
