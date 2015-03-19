@@ -16,7 +16,8 @@ describe('xdLocalStorage test', function () {
     xdLocalStorage.init(
       {
         iframeUrl: 'https://rawgit.com/javierfigueroa/cross-domain-local-storage/master/app/views/cross-domain-local-storage.html',
-        domains: ['localhost:9000', 'rawgit.com'],
+        parentDomain: 'http://localhost:9876',
+        iframeDomain: 'https://rawgit.com',
         initCallback: function () {
           console.log('Got iframe ready');
           done();
