@@ -12,10 +12,6 @@
     <link rel="stylesheet" href="styles/styles.css">
     <!-- endbuild -->
     
-    <script type="text/javascript">    
-        var domainsWhiteList =  ['localhost:9000', 'rawgit.com'];
-    </script>
-
     <!-- build:js({app,.tmp}) scripts/xdLocalStorage.min.js -->
     <script src="scripts/services/xd-utils.js"></script>
     <script src="scripts/xdLocalStorage.js"></script>
@@ -35,8 +31,9 @@
     <script type="text/javascript">
         xdLocalStorage.init(
                 {
-                    iframeUrl:'https://rawgit.com/ofirdagan/cross-domain-local-storage/master/app/views/cross-domain-local-storage.html',
-                    domains: domainsWhiteList,
+                    iframeUrl:'https://rawgit.com/javierfigueroa/cross-domain-local-storage/master/app/views/cross-domain-local-storage.html',
+                    parentDomain: 'http://localhost:9000',
+                    iframeDomain: 'http://localhost:9000',
                     initCallback: function () {
                         console.log('Got iframe ready');
                         xdLocalStorage.setItem('check', 'no callback');

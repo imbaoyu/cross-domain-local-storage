@@ -8,7 +8,8 @@ window.xdLocalStorage = window.xdLocalStorage || (function () {
   var options = {
     iframeId: 'cross-domain-iframe',
     iframeUrl: undefined,
-    domains: [location.origin],
+    iframeDomain: location.origin,
+    parentDomain: location.origin,
     initCallback: function () {}
   };
   var requestId = -1;
@@ -25,7 +26,7 @@ window.xdLocalStorage = window.xdLocalStorage || (function () {
   }
 
   function receiveMessage(event) {
-    if((new RegExp( '\\b' + options.domains.join('\\b|\\b') + '\\b', 'i')).test(event.origin) ){
+    if((new RegExp(options.iframeDomain, 'i')).test(event.origin) ){
       var data;
       try {
         data = JSON.parse(event.data);
@@ -53,7 +54,7 @@ window.xdLocalStorage = window.xdLocalStorage || (function () {
       key: key,
       value: value
     };
-    iframe.contentWindow.postMessage(JSON.stringify(data), '*');
+    iframe.contentWindow.postMessage(JSON.stringify(data), options.iframeDomain);
   }
   function init(customOptions) {
     if (wasInit) {
@@ -61,7 +62,7 @@ window.xdLocalStorage = window.xdLocalStorage || (function () {
       return;
     }
     wasInit = true;
-    options = XdUtils.extend(customOptions, options);
+    options = XdUtils.extend(customOptions, options);    
     var temp = document.createElement('div');
 
     if (window.addEventListener) {
@@ -70,7 +71,7 @@ window.xdLocalStorage = window.xdLocalStorage || (function () {
       window.attachEvent('onmessage', receiveMessage);
     }
 
-    temp.innerHTML = '<iframe id="' + options.iframeId + '" src=' + options.iframeUrl + ' style="display: none;"></iframe>';
+    temp.innerHTML = '<iframe id="' + options.iframeId + '" name="' + options.parentDomain + '" src=' + options.iframeUrl + ' style="display: none;"></iframe>';
     document.body.appendChild(temp);
     iframe = document.getElementById(options.iframeId);
   }

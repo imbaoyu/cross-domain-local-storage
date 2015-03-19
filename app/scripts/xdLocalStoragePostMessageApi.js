@@ -3,9 +3,10 @@
  */
 'use strict';
 /* global XdUtils */
-(function (domains) {
+(function () {
 
   var MESSAGE_NAMESPACE = 'cross-domain-local-message';
+  var parentDomain = window.name;
   var defaultData = {
     namespace: MESSAGE_NAMESPACE
   };
@@ -13,7 +14,7 @@
   function postData(id, data) {
     var mergedData = XdUtils.extend(data, defaultData);
     mergedData.id = id;
-    parent.postMessage(JSON.stringify(mergedData), '*');
+    parentDomain && parent.postMessage(JSON.stringify(mergedData), parentDomain);
   }
 
   function getData(id, key) {
@@ -50,7 +51,7 @@
   }
 
   function receiveMessage(event) {
-    if((new RegExp( '\\b' + domains.join('\\b|\\b') + '\\b', 'i')).test(event.origin)){
+    if(parentDomain && (new RegExp(parentDomain, 'i')).test(event.origin)){
       var data;
       try {
         data = JSON.parse(event.data);
@@ -84,8 +85,8 @@
       namespace: MESSAGE_NAMESPACE,
       id: 'iframe-ready'
     };
-    parent.postMessage(JSON.stringify(data), '*');
+    parent.postMessage(JSON.stringify(data), parentDomain);
   }
   //on creation
-  sendOnLoad();
-})(domainsWhiteList || [location.origin]);
+  parentDomain && sendOnLoad();
+})();
