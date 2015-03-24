@@ -26,7 +26,7 @@ window.xdLocalStorage = window.xdLocalStorage || (function () {
   }
 
   function receiveMessage(event) {
-    if((new RegExp(options.iframeDomain, 'i')).test(event.origin) ){
+    if(options.iframeDomain === event.origin){
       var data;
       try {
         data = JSON.parse(event.data);

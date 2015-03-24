@@ -51,7 +51,7 @@
   }
 
   function receiveMessage(event) {
-    if(parentDomain && (new RegExp(parentDomain, 'i')).test(event.origin)){
+    if(parentDomain && parentDomain === event.origin){
       var data;
       try {
         data = JSON.parse(event.data);
