@@ -63,6 +63,8 @@ bower install xdLocalStorage --save
         {
             /* required */
             iframeUrl:'path to your html from step 1',
+            iframeDomain: 'iframe origin',
+            parentDomain: location.origin,
             //an option function to be called right after the iframe was loaded and ready for action
             initCallback: function () {
                 console.log('Got iframe ready');
